@@ -36,10 +36,16 @@ class TaskRepository
         return $task;
     }
 
-    public function findAll(array $filtros = []): array
+
+    public function findAll(?int $usuarioId, array $filtros = []): array
     {
+
         $sql = "SELECT * FROM relatorios WHERE 1=1";
-        
+
+        if ($usuarioId !== null) {
+            $sql .= " AND usuario_id = :usuario_id";
+        }
+
         // Filtro por Cliente (?cliente=nome)
         if (!empty($filtros['cliente'])) {
             $sql .= " AND cliente LIKE :cliente";
@@ -51,6 +57,10 @@ class TaskRepository
         }
 
         $stmt = $this->pdo->prepare($sql);
+
+        if ($usuarioId !== null) {
+            $stmt->bindValue(':usuario_id', $usuarioId);
+        }
 
         if (!empty($filtros['cliente'])) {
             $stmt->bindValue(':cliente', '%' . $filtros['cliente'] . '%');

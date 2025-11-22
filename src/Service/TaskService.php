@@ -15,9 +15,11 @@ class TaskService
         $this->repository = new TaskRepository();
     }
 
-    public function listar($filtros)
+    public function listar(int $usuarioId, $role, $filtros)
     {
-        return $this->repository->findAll($filtros);
+        $idParaBuscar = ($role === 'admin') ? null : $usuarioId;
+
+        return $this->repository->findAll($idParaBuscar, $filtros);
     }
 
     public function buscarPorId($id)
@@ -42,9 +44,11 @@ class TaskService
             throw new APIException("O valor do serviço não pode ser negativo", 400);
         }
 
-        // Cria o objeto Task (Model)
-        // posteriormente add token jwt
-        $usuarioId = $dados['usuario_id'] ?? 1; 
+        if (!isset($dados['usuario_id'])) {
+            throw new APIException("Erro interno: Usuário proprietário do relatorio não identificado.", 500);
+        }
+
+        $usuarioId = (int) $dados['usuario_id'];
 
         $task = new Task(
             $usuarioId,
@@ -62,6 +66,8 @@ class TaskService
     {
         // Verifica se existe antes de atualizar
         $existente = $this->buscarPorId($id);
+
+        // fazer: validar se o usuário é admin ou dono da task para deletar
 
         // Validação de Valor na atualização
         if (isset($dados['valor']) && $dados['valor'] < 0) {

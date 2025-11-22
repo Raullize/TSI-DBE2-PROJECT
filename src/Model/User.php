@@ -10,6 +10,7 @@ class User
     public ?string $senha;
     public ?string $senha_hash;
     public int $ativo;
+    public string $cargo;
 
     public function __construct(
         string $nome,
@@ -17,7 +18,8 @@ class User
         ?string $senha = null,
         int $ativo = 1,
         ?int $id = null,
-        ?string $senha_hash = null
+        ?string $senha_hash = null,
+        string $cargo = 'user'
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -25,5 +27,6 @@ class User
         $this->senha = $senha;
         $this->ativo = $ativo;
         $this->senha_hash = $senha_hash;
+        $this->cargo = $cargo;
     }
 }

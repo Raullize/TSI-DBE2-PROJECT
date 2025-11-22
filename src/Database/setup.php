@@ -25,7 +25,8 @@ try {
             email TEXT NOT NULL UNIQUE,
             senha_hash TEXT NOT NULL,
             ativo INTEGER DEFAULT 1,
-            criado_em TEXT DEFAULT CURRENT_TIMESTAMP
+            criado_em TEXT DEFAULT CURRENT_TIMESTAMP,
+            cargo TEXT DEFAULT 'user'
         );
     ";
 
@@ -47,43 +48,52 @@ try {
     // Executa a criação
     $pdo->exec($sqlUsuarios);
     $pdo->exec($sqlRelatorios);
-    echo "✅ Tabelas criadas com sucesso!\n";
+    echo " Tabelas criadas com sucesso!\n";
 
     $pdo->beginTransaction();
 
-    // --- Criando Usuários ---
-    $senhaPadrao = password_hash('admin', PASSWORD_DEFAULT);
+    // Criando Usuários padrão e o admin
+    // senha debug para testes
+    $senhaPadrao = password_hash('senha123', PASSWORD_DEFAULT);
+    $senhaAdmin =  password_hash('admin', PASSWORD_DEFAULT);
     
     $usuariosSeed = [
-        ['nome' => 'Thiago admin', 'email' => 'thiago@proki.com', 'senha_hash' => $senhaPadrao],
-        ['nome' => 'Miguel admin', 'email' => 'miguel@proki.com', 'senha_hash' => $senhaPadrao],
-        ['nome' => 'Raul admin', 'email' => 'raul@proki.com', 'senha_hash' => $senhaPadrao]
+        ['nome' => 'admin', 'email' => 'admin@admin.com', 'senha_hash' => $senhaAdmin, 'cargo' => 'admin'],
+        ['nome' => 'Thiago', 'email' => 'thiago@proki.com', 'senha_hash' => $senhaPadrao, 'cargo' => 'user'],
+        ['nome' => 'Miguel', 'email' => 'miguel@proki.com', 'senha_hash' => $senhaPadrao, 'cargo' => 'user'],
+        ['nome' => 'Raul', 'email' => 'raul@proki.com', 'senha_hash' => $senhaPadrao, 'cargo' => 'user'],
     ];
 
-    $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha_hash) VALUES (:nome, :email, :senha_hash)");
+    $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha_hash, cargo) VALUES (:nome, :email, :senha_hash, :cargo)");
     
-    foreach ($usuariosSeed as $u) {
-        $stmt->execute($u);
+    foreach ($usuariosSeed as $user) {
+        $stmt->execute($user);
     }
+
     echo " Usuários de teste inseridos!\n";
 
-    // --- Criando Relatórios Falsos ---
-    $idThiago = $pdo->lastInsertId();
-
+    // Criando Relatórios Falsos (DEBUG)
     $relatoriosSeed = [
         [
-            'usuario_id' => 1,
+            'usuario_id' => 2,
             'titulo' => 'Manutenção de PC',
             'cliente' => 'Empresa X',
             'data_realizacao' => date('Y-m-d'),
             'valor' => 150.00
         ],
         [
-            'usuario_id' => 1,
+            'usuario_id' => 3,
             'titulo' => 'Instalação de Rede',
             'cliente' => 'Escola Y',
             'data_realizacao' => date('Y-m-d', strtotime('-1 day')),
             'valor' => 500.00
+        ],
+        [
+            'usuario_id' => 4,
+            'titulo' => 'Serviço genérico',
+            'cliente' => 'Ifsul Câmpus Charqueadas',
+            'data_realizacao' => date('Y-m-d', strtotime('-3 day')),
+            'valor' => 20.00
         ]
     ];
 
@@ -92,6 +102,7 @@ try {
     foreach ($relatoriosSeed as $r) {
         $stmtRel->execute($r);
     }
+
     echo "Relatórios de teste inseridos!\n";
 
     // Confirma

@@ -1,13 +1,17 @@
 @baseUrl = http://localhost:80/api
 
-### LISTAR TODOS (GET)
+##Rotas Protegidas
+
+### LISTAR
 GET {{baseUrl}}/relatorios
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
 ### CRIAR UM RELATÓRIO (POST)
 # Teste de sucesso
 POST {{baseUrl}}/relatorios
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
 {
     "titulo": "Formatação de Notebook",

@@ -34,13 +34,15 @@ class UserService
             $dados['nome'],
             $dados['email'],
             $dados['senha'],
-            1,
-            null,
-            $senhaHash
+            $dados['ativo'] ?? 1,
+            null,    
+            $senhaHash,        
+            $dados['cargo'] ?? 'user'
         );
 
         $novoUsuario = $this->repository->create($user);
 
+        //remove as senhas do client-side por segurança
         $novoUsuario->senha = null;
         $novoUsuario->senha_hash = null;
 

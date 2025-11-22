@@ -7,8 +7,8 @@ POST {{baseUrl}}/usuarios
 Content-Type: application/json
 
 {
-    "nome": "Thiago Teste",
-    "email": "thiago@email.com",
+    "nome": "Teste",
+    "email": "teste@email.com",
     "senha": "minha_senha_secreta"
 }
 
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 {
     "nome": "Invasor",
-    "email": "thiago@email.com",
+    "email": "teste@email.com",
     "senha": "outra_senha"
 }
 
@@ -30,7 +30,6 @@ Content-Type: application/json
 
 {
     "nome": "Sem Email"
-    // Falta email e senha
 }
 
 ### CONSULTA DE USUÁRIOS
@@ -45,17 +44,6 @@ GET {{baseUrl}}/usuarios/999
 Content-Type: application/json
 
 ###  Tentar Listar Todos (Rota Bloqueada)
-# Esperado: 403 Forbidden ou 405 Method Not Allowed
+# Esperado: 403 Forbidden
 GET {{baseUrl}}/usuarios
 Content-Type: application/json
-
-### AUTENTICAÇÃO (LOGIN)
-
-### Fazer Login
-POST {{baseUrl}}/login
-Content-Type: application/json
-
-{
-    "email": "thiago@email.com",
-    "senha": "minha_senha_secreta"
-}

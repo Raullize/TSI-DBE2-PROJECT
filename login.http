@@ -1,0 +1,50 @@
+@baseUrl = http://localhost:80/api
+
+### LOGIN COM SUCESSO
+# ADMIN
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "admin@admin.com",
+    "senha": "admin"
+}
+
+### USUARIO TESTE COM relatorio
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "thiago@proki.com",
+    "senha": "senha123"
+}
+
+###(utiliza as credenciais criadas em user.http)
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "teste@email.com",
+    "senha": "minha_senha_secreta"
+}
+
+### SENHA ERRADA
+# Deve retornar 401 Unauthorized
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "thiago@email.com",
+    "senha": "senha_errada"
+}
+
+### EMAIL INEXISTENTE
+# Deve retornar 401 Unauthorized
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "naoexiste@email.com",
+    "senha": "123"
+}
