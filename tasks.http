@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:80/api
+
+### LISTAR TODOS (GET)
+GET {{baseUrl}}/relatorios
+Content-Type: application/json
+
+### CRIAR UM RELATÓRIO (POST)
+# Teste de sucesso
+POST {{baseUrl}}/relatorios
+Content-Type: application/json
+
+{
+    "titulo": "Formatação de Notebook",
+    "cliente": "João da Silva",
+    "data_realizacao": "2023-11-21",
+    "valor": 150.00,
+    "descricao": "Notebook Dell estava lento. Formatado com Windows 11."
+}
+
+### TESTAR VALIDAÇÃO (POST com Erro)
+# Deve retornar erro 400 pois valor eh negativo
+POST {{baseUrl}}/relatorios
+Content-Type: application/json
+
+{
+    "usuario_id": 1,
+    "titulo": "Teste Erro",
+    "cliente": "Errado",
+    "data_realizacao": "2023-11-21",
+    "valor": -50.00
+}
+
+### BUSCAR POR ID (GET)
+GET {{baseUrl}}/relatorios/1
+Content-Type: application/json
+
+### ATUALIZAR (PUT)
+PUT {{baseUrl}}/relatorios/1
+Content-Type: application/json
+
+{
+    "titulo": "Formatação de Notebook (Urgente)",
+    "cliente": "João da Silva",
+    "data_realizacao": "2023-11-21",
+    "valor": 200.00,
+    "descricao": "Adicionado taxa de urgência."
+}
+
+### DELETAR (DELETE)
+DELETE {{baseUrl}}/relatorios/1
+Content-Type: application/json

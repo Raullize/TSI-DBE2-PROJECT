@@ -19,14 +19,13 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 // AUTOLOAD
 spl_autoload_register(function ($class) {
     
-    $prefix = 'src\\';
-    $base_dir = __DIR__ . '/';
-    
-    $file = str_replace('\\', '/', $class) . '.php';
-    $path = 'src/' . $file;
 
-    if (file_exists($path)) {
-        require_once $path;
+    $classPath = str_replace('\\', '/', $class);
+
+    $file = __DIR__ . '/' . $classPath . '.php';
+
+    if (file_exists($file)) {
+        require_once $file;
     }
 });
 

@@ -4,7 +4,7 @@ require_once 'src/config.php';
 
 use Controller\UserController;
 use Controller\LoginController;
-use Controller\RelatorioController;
+use Controller\TaskController;
 use Http\Request;
 use Http\Response;
 use Error\APIException;
@@ -34,7 +34,7 @@ switch ($request->getResource()) {
 
     // Rota: '/api/relatorios'
     case 'relatorios':
-        $controller = new RelatorioController();
+        $controller = new TaskController();
         $controller->processRequest($request);
         break;
 
