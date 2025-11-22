@@ -65,4 +65,11 @@ class UserRepository
 
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
+    public function findAll(): array
+    {
+        $sql = "SELECT id, nome, email, ativo, cargo, criado_em FROM usuarios";
+        $stmt = $this->pdo->query($sql);
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

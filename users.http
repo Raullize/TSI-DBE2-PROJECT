@@ -34,16 +34,12 @@ Content-Type: application/json
 
 ### CONSULTA DE USUÁRIOS
 
-### Buscar Usuário por ID (Existente)
+### Buscar Usuário por ID (permitido caso seja o proprio usuario)
 GET {{baseUrl}}/usuarios/1
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
-### Buscar Usuário por ID (Inexistente)
-# Esperado: 404 Not Found
-GET {{baseUrl}}/usuarios/999
-Content-Type: application/json
-
-###  Tentar Listar Todos (Rota Bloqueada)
-# Esperado: 403 Forbidden
+###  Tentar Listar Todos (rota exclusiva de admin)
 GET {{baseUrl}}/usuarios
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI

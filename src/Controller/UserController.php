@@ -6,6 +6,7 @@ use Service\UserService;
 use Http\Request;
 use Http\Response;
 use Error\APIException;
+use Utils\jwt;
 
 class UserController
 {
@@ -19,7 +20,7 @@ class UserController
     public function processRequest(Request $request)
     {
         $method = $request->getMethod();
-        $id = $request->getId(); // Pode ser o ID numérico ou "me"
+        $id = $request->getId(); // Pode ser o ID
         $body = $request->getBody();
 
         switch ($method) {
@@ -30,16 +31,50 @@ class UserController
                 break;
 
             case 'GET':
+
+                $usuarioLogado = $this->autenticarUsuario();
                 if ($id) {
+
+                    if ($usuarioLogado['role'] !== 'admin' && $id != $usuarioLogado['id']) {
+                        throw new APIException("Acesso negado. Você só pode visualizar seu próprio perfil.", 403);
+                    }
                     $user = $this->service->buscarPorId($id);
                     Response::send($user);
                 } else {
-                    throw new APIException("Listagem de todos os usuários desabilitada por segurança.", 403);
+                    if ($usuarioLogado['role'] !== 'admin') {
+                        throw new APIException("Acesso negado. Apenas administradores podem listar usuários.", 403);
+                    }
+                    $lista = $this->service->listarTodos();
+                    Response::send($lista);
                 }
                 break;
             
             default:
                 throw new APIException("Método não suportado para Usuários.", 405);
+        }
+    }
+
+    private function autenticarUsuario(): array
+    {
+        $headers = getallheaders();
+        $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? null;
+
+        if (!$authHeader) {
+            throw new APIException("Token de autenticação não fornecido.", 401);
+        }
+
+        if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            throw new APIException("Formato do token inválido.", 401);
+        }
+
+        try {
+            $payload = Jwt::validate($matches[1]);
+            return [
+                'id' => $payload['sub'],
+                'role' => $payload['role'] ?? 'user'
+            ];
+        } catch (\Exception $e) {
+            throw new APIException("Token inválido ou expirado: " . $e->getMessage(), 401);
         }
     }
 }

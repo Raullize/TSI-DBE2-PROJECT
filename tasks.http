@@ -1,8 +1,8 @@
 @baseUrl = http://localhost:80/api
 
-##Rotas Protegidas
+##Rotas Protegidas (somente o proprio usuario ou o admin podem utilizar-las)
 
-### LISTAR
+### LISTAR (caso seja um admin logado consegue ver todos, se nao ve somente os proprios)
 GET {{baseUrl}}/relatorios
 Content-Type: application/json
 Authorization: Bearer COLE_SEU_TOKEN_AQUI
@@ -25,6 +25,7 @@ Authorization: Bearer COLE_SEU_TOKEN_AQUI
 # Deve retornar erro 400 pois valor eh negativo
 POST {{baseUrl}}/relatorios
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
 {
     "usuario_id": 1,
@@ -34,13 +35,15 @@ Content-Type: application/json
     "valor": -50.00
 }
 
-### BUSCAR POR ID (GET)
-GET {{baseUrl}}/relatorios/1
+### BUSCAR POR ID (GET) somente admin e dono da task podem ver
+GET {{baseUrl}}/relatorios/2
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
-### ATUALIZAR (PUT)
+### ATUALIZAR por ID(PUT) somente dono da task e admin podem atualizar
 PUT {{baseUrl}}/relatorios/1
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
 {
     "titulo": "Formatação de Notebook (Urgente)",
@@ -50,6 +53,7 @@ Content-Type: application/json
     "descricao": "Adicionado taxa de urgência."
 }
 
-### DELETAR (DELETE)
+### DELETAR por ID (DELETE)
 DELETE {{baseUrl}}/relatorios/1
 Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI

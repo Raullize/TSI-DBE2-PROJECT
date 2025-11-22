@@ -37,6 +37,7 @@ class TaskController
             case 'GET':
                 if ($id) {
                     $dado = $this->service->buscarPorId($id);
+                    if($dado['usuario_id'] !== $usuarioId && $usuarioRole !== 'admin')throw new APIException("Acesso negado. Você não é o dono deste relatório.", 403);
                     Response::send($dado);
                 } else {
                     // Passa os filtros (?cliente=X&data=Y) para o Service
@@ -53,14 +54,16 @@ class TaskController
                 break;
 
             case 'PUT':
-                if (!$id) throw new APIException("ID obrigatório para atualização", 400);
-                $atualizado = $this->service->atualizar($id, $body);
+                if (!$id) throw new APIException("ID obrigatório", 400);
+                
+                $atualizado = $this->service->atualizar($id, $body, $usuarioId, $usuarioRole);
                 Response::send($atualizado);
                 break;
 
             case 'DELETE':
-                if (!$id) throw new APIException("ID obrigatório para exclusão", 400);
-                $this->service->deletar($id);
+                if (!$id) throw new APIException("ID obrigatório", 400);
+                
+                $this->service->deletar($id, $usuarioId, $usuarioRole);
                 Response::send(null, 204);
                 break;
 

@@ -10,7 +10,7 @@ Content-Type: application/json
     "senha": "admin"
 }
 
-### USUARIO TESTE COM relatorio
+### User teste com relatorio
 
 POST {{baseUrl}}/login
 Content-Type: application/json
@@ -35,7 +35,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "email": "thiago@email.com",
+    "email": "teste@email.com",
     "senha": "senha_errada"
 }
 

@@ -57,5 +57,9 @@ class UserService
         }
         return $user;
     }
+    public function listarTodos()
+    {
+        return $this->repository->findAll();
+    }
     
 }

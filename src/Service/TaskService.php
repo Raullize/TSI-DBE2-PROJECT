@@ -26,7 +26,7 @@ class TaskService
     {
         $task = $this->repository->findById($id);
         if (!$task) {
-            throw new APIException("Relatório/Task não encontrado", 404);
+            throw new APIException("Relatório não encontrado", 404);
         }
         return $task;
     }
@@ -67,7 +67,9 @@ class TaskService
         // Verifica se existe antes de atualizar
         $existente = $this->buscarPorId($id);
 
-        // fazer: validar se o usuário é admin ou dono da task para deletar
+        if ($role !== 'admin' && $task->usuario_id != $usuarioId) {
+            throw new APIException("Acesso negado. Você não é o dono deste relatório.", 403);
+        }
 
         // Validação de Valor na atualização
         if (isset($dados['valor']) && $dados['valor'] < 0) {
@@ -88,6 +90,10 @@ class TaskService
     {
         // Verifica se existe
         $this->buscarPorId($id);
+
+        if ($role !== 'admin' && $task->usuario_id != $usuarioId) {
+            throw new APIException("Acesso negado. Você não pode excluir este relatório.", 403);
+        }
 
         // Hard Delete
         $this->repository->delete($id);
