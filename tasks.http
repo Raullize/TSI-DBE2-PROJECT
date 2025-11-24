@@ -1,9 +1,14 @@
 @baseUrl = http://localhost:80/proki
 
-##Rotas Protegidas (somente o proprio usuario ou o admin podem utilizar-las)
+##Rotas Protegidas (somente o proprio usuario ou o admin podem utiliza-las)
 
 ### LISTAR (caso seja um admin logado consegue ver todos, se nao ve somente os proprios)
 GET {{baseUrl}}/relatorios
+Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
+
+### BUSCAR POR ID somente admin e dono da task podem ver
+GET {{baseUrl}}/relatorios/2
 Content-Type: application/json
 Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
@@ -34,11 +39,6 @@ Authorization: Bearer COLE_SEU_TOKEN_AQUI
     "data_realizacao": "2023-11-21",
     "valor": -50.00
 }
-
-### BUSCAR POR ID (GET) somente admin e dono da task podem ver
-GET {{baseUrl}}/relatorios/2
-Content-Type: application/json
-Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
 ### ATUALIZAR por ID(PUT) somente dono da task e admin podem atualizar
 PUT {{baseUrl}}/relatorios/1

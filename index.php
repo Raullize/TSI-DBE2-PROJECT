@@ -43,11 +43,12 @@ switch ($request->getResource()) {
         $endpoints = [
             "POST /proki/usuarios" => "Criar Conta",
             "POST /proki/login" => "Autenticar",
-            "GET /proki/relatorios" => "Listar todos relatórios",
             "POST /proki/relatorios" => "Criar relatório",
             "GET /proki/relatorios/:id" => "Ver relatorio especifico",
             "PUT /proki/relatorios/:id" => "Atualizar relatorio",
-            "DELETE /proki/relatorios/:id" => "Excluir relatorio"
+            "DELETE /proki/relatorios/:id" => "Excluir relatorio",
+            "GET(admin) /proki/relatorios" => "Listar todos relatórios",
+            "GET(admin) /proki/usuarios" => "Listar todos usuarios",
         ];
         Response::send(["autores" => "Thiago Caputi, Raul Lize Teixeira, Miguel Leonardo Lewandowiski ", "api" => "Proki-Mini", "versao" => "1.0.0", "endpoints" => $endpoints]);
         break;

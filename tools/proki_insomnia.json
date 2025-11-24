@@ -1,0 +1,274 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-11-24T12:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.0",
+  "resources": [
+    {
+      "_id": "req_login",
+      "parentId": "fld_auth",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/login",
+      "name": "1. Login (Autenticar)",
+      "description": "Faz login e retorna o Token. Copie o token da resposta e coloque nas variáveis de ambiente.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"admin@admin.com\",\n\t\"senha\": \"admin\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_signup",
+      "parentId": "fld_auth",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/usuarios",
+      "name": "2. Criar Usuário (Sign-up)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"nome\": \"Novo Usuário\",\n\t\"email\": \"novo@email.com\",\n\t\"senha\": \"123456\",\n\t\"cargo\": \"user\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -90,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_users",
+      "parentId": "fld_auth",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/usuarios",
+      "name": "3. Listar Usuários (Admin)",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -80,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_user",
+      "parentId": "fld_auth",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/usuarios/1",
+      "name": "4. Ver Perfil (ID)",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -70,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_tasks",
+      "parentId": "fld_reports",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/relatorios",
+      "name": "1. Listar Relatórios",
+      "description": "Se Admin: Lista tudo. Se User: Lista os seus.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -100,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_tasks_filter",
+      "parentId": "fld_reports",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/relatorios",
+      "name": "2. Listar com Filtro",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "cliente",
+          "value": "Empresa",
+          "disabled": false
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -90,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_task",
+      "parentId": "fld_reports",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/relatorios",
+      "name": "3. Criar Relatório",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"titulo\": \"Formatação de PC\",\n\t\"cliente\": \"Cliente Teste\",\n\t\"data_realizacao\": \"2025-11-24\",\n\t\"valor\": 150.00,\n\t\"descricao\": \"Serviço realizado com sucesso.\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -80,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_task",
+      "parentId": "fld_reports",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/relatorios/1",
+      "name": "4. Atualizar Relatório",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"titulo\": \"Formatação de PC (Atualizado)\",\n\t\"cliente\": \"Cliente Teste\",\n\t\"data_realizacao\": \"2025-11-25\",\n\t\"valor\": 200.00\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -70,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_task",
+      "parentId": "fld_reports",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "url": "{{ base_url }}/relatorios/1",
+      "name": "5. Deletar Relatório",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ token }}"
+      },
+      "metaSortKey": -60,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_proki",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "name": "Auth & Usuários",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -100,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_reports",
+      "parentId": "wrk_proki",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "name": "Relatórios (Tasks)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -90,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_proki",
+      "parentId": null,
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "name": "Proki-Mini API",
+      "description": "Coleção de rotas para o projeto Proki.",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_dev",
+      "parentId": "wrk_proki",
+      "modified": 1700000000000,
+      "created": 1700000000000,
+      "name": "Dev Environment",
+      "data": {
+        "base_url": "http://localhost:80/proki",
+        "token": "(Dev Environment): COLE_SEU_TOKEN_AQUI_DEPOIS_DO_LOGIN"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "token"
+        ]
+      },
+      "color": "#7d69cb",
+      "isPrivate": false,
+      "metaSortKey": 1700000000000,
+      "_type": "environment"
+    }
+  ]
+}
