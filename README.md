@@ -5,7 +5,7 @@
 ## Tecnologias Utilizadas
 
 * **Linguagem:** PHP 8+ (Puro, sem frameworks)
-**Banco de Dados:** SQLite
+* **Banco de Dados:** SQLite
 * **Autenticação:** JWT (JSON Web Token)
 
 ## Funcionalidades
@@ -15,7 +15,24 @@
 * **Isolamento de Dados:** Usuários comuns veem apenas os seus próprios relatórios.
 * **Segurança:** Senhas com hash (bcrypt) e proteção contra injeção SQL (PDO).
 
----
+## Arquitetura e Padrões do Projeto
+
+### Arquitetura em Camadas (Controller-Service-Repository)
+
+O sistema estende o padrão **MVC** clássico para uma arquitetura mais robusta, garantindo a **Separação de Responsabilidades** (*Separation of Concerns*):
+
+* **Controller:** Responsável apenas por lidar com a camada HTTP (receber a requisição, capturar dados e devolver a resposta JSON). Não contém regras de negócio.
+* **Service:** Contém todas as **regras de negócio**, validações e lógica. É agnóstico ao protocolo HTTP ou ao tipo de base de dados.
+* **Repository:** Camada exclusiva de acesso aos dados (SQL). Isola as queries e a comunicação com o banco de dados do restante do sistema.
+* **Model:** Representação pura das entidades (DTOs) que trafegam entre as camadas.
+
+### Padrão PSR-4
+
+A estrutura de diretórios e nomes de ficheiros segue rigorosamente a recomendação **PSR-4** (PHP Standards Recommendation) para facilitar o **Autoloading** nativo.
+
+* **PascalCase:** Todas as classes e nomes de ficheiros utilizam a notação *PascalCase* (ex: `TaskController.php`, `UserService.php`), onde a primeira letra de cada palavra é maiúscula.
+
+* **Namespaces:** Os namespaces refletem exatamente a estrutura física das pastas (ex: `namespace Controller;` refere-se à pasta `src/Controller/`).
 
 ## Estrutura do Projeto
 
@@ -41,7 +58,7 @@ proki-mini/
 └── README.md           # Documentação
 ```
 
-## Como rodar o projeto
+## Como executar o projeto
 
 1. Clonar o repositório
 
@@ -57,9 +74,7 @@ Na raiz do projeto, execute o script de setup para criar as tabelas e popular co
 php src/database/setup.php
 ```
 
----
-
-## Modelo do Banco de dados:
+## Modelo do Banco de dados
 
 ![Diagrama ER do Proki](./assets/diagrama_db.png)
 
@@ -94,8 +109,8 @@ A API roda sob o prefixo `/proki`.
 
 | Método | Endpoint        | Descrição                                 |
 |--------|-----------------|-------------------------------------------|
-| POST   | /proki/login    | Realiza login e retorna o Token JWT       |
 | POST   | /proki/usuarios | Cria uma nova conta de usuário            |
+| POST   | /proki/login    | Realiza login e retorna o Token JWT       |
 
 ### 📄 Relatórios
 
