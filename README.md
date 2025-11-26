@@ -71,7 +71,7 @@ git clone https://github.com/CaputiDev/proki-mini
 Na raiz do projeto, execute o script de setup para criar as tabelas e popular com dados de teste:
 
 ```bash
-php src/database/setup.php
+php src/Database/setup.php
 ```
 
 ## Modelo do Banco de dados
