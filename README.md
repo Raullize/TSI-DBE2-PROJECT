@@ -58,6 +58,10 @@ proki-mini/
 └── README.md           # Documentação
 ```
 
+## Modelo de Classes
+
+![Diagrama de classes do Proki-mini](./assets/diagrama_classe.png)
+
 ## Como executar o projeto
 
 1. Clonar o repositório
@@ -74,9 +78,9 @@ Na raiz do projeto, execute o script de setup para criar as tabelas e popular co
 php src/Database/setup.php
 ```
 
-## Modelo do Banco de dados
+## Modelo ER do Banco de dados
 
-![Diagrama ER do Proki](./assets/diagrama_db.png)
+![Diagrama ER do Proki-mini](./assets/diagrama_db.png)
 
 ### Usuários de Teste (seed)
 
