@@ -40,8 +40,14 @@ class TaskController
                     if($dado['usuario_id'] !== $usuarioId && $usuarioRole !== 'admin')throw new APIException("Acesso negado. Você não é o dono deste relatório.", 403);
                     Response::send($dado);
                 } else {
-                    $lista = $this->service->listar($usuarioId, $usuarioRole, $query);
-                    Response::send($lista);
+                    $format = $request->getQuery()['format'] ?? null;
+                    if ($format === 'csv') {
+                        $lista = $this->service->listar($usuarioId, $usuarioRole, $query);
+                        $this->exportToCsv($lista);
+                    } else {
+                        $lista = $this->service->listar($usuarioId, $usuarioRole, $query);
+                        Response::send($lista);
+                    }
                 }
                 break;
 
@@ -70,7 +76,40 @@ class TaskController
                 throw new APIException("Método não permitido", 405);
         }
     }
-        private function autenticarUsuario(): array
+
+    private function exportToCsv(array $data): void
+    {
+        if (empty($data)) {
+            Response::send([], 204); // No content
+            return;
+        }
+
+        $basePath = dirname(__DIR__, 2);
+        $exportDir = $basePath . '/exports';
+
+        if (!is_dir($exportDir)) {
+            mkdir($exportDir, 0777, true);
+        }
+
+        $filename = $exportDir . '/tasks_' . date('Y-m-d_H-i-s') . '.csv';
+        $output = fopen($filename, 'w');
+
+        // Cabeçalho do CSV
+        fputcsv($output, array_keys($data[0]));
+
+        // Dados
+        foreach ($data as $row) {
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+
+        // Padroniza as barras para a resposta da API
+        $responsePath = str_replace('\\', '/', $filename);
+        Response::send(['message' => 'Arquivo CSV de tarefas gerado com sucesso em: ' . $responsePath]);
+    }
+
+    private function autenticarUsuario(): array
     {
         $headers = getallheaders();
         
