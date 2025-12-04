@@ -1,3 +1,4 @@
 src/Database/database.sqlite
 
 *.sqlite
+/exports/
