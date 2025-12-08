@@ -42,7 +42,8 @@ A estrutura de diretórios e nomes de ficheiros segue rigorosamente a recomenda�
 ```text
 simple-task-manager-api/
 ├── assets/
-│   └── diagrama_bd.png # Diagrama ER do Banco de Dados
+│   ├── diagrama_classe.png # Diagrama UML das classes
+│   └── diagrama_db.png # Diagrama ER do Banco de Dados
 ├── src/
 │   ├── Controller/     # Controladores (Entrada da API)
 │   ├── Database/       # Conexão e Setup do SQLite
