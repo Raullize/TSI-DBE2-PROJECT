@@ -282,7 +282,7 @@
       "parentId": null,
       "modified": 1700000000000,
       "created": 1700000000000,
-      "name": "api API ",
+      "name": "simple-task-manager-api",
       "description": "Coleção de rotas para o projeto api.",
       "scope": "collection",
       "_type": "workspace"
