@@ -12,6 +12,11 @@ GET {{baseUrl}}/relatorios/2
 Content-Type: application/json
 Authorization: Bearer COLE_SEU_TOKEN_AQUI
 
+### LISTAR COM FILTRO
+GET {{baseUrl}}/relatorios?cliente=Escola%20Y
+Content-Type: application/json
+Authorization: Bearer COLE_SEU_TOKEN_AQUI
+
 ### CRIAR UM RELATÓRIO (POST)
 # Teste de sucesso
 POST {{baseUrl}}/relatorios
